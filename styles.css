@@ -1,6 +1,7 @@
 /* Add your styles here */
 body {
     background: #000;
+    font-family: 'ADLaM Display', sans-serif;
 }
 #scorebox_t1 {
     border: 1px solid #333;
@@ -19,14 +20,17 @@ body {
     font-size: 1.2em;
     float: left;
     color: #000;
+    font-family: 'ADLaM Display', sans-serif;
 }
 .scorebox_headline {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 8px;
+    font-family: 'ADLaM Display', sans-serif;
 }
 
 .scorebox_scoreline {
     font-size: 1.4em;
     color: #0078D7;
+    font-family: 'ADLaM Display', sans-serif;
 }
