@@ -2,35 +2,42 @@
 body {
     background: #000;
     font-family: 'ADLaM Display', sans-serif;
+    white-space: nowrap;
 }
-#scorebox_t1 {
-    border: 1px solid #333;
-    padding: 20px;
-    margin: 20px;
-    background: #f9f9f9;
-    font-size: 1.2em;
-}
-.scorebox {
-    width: 150px;
-    height: 100px;
-    border: 1px solid #333;
-    padding: 20px;
-    margin: 20px;
-    background: #f9f9f9;
-    font-size: 1.2em;
-    float: left;
-    color: #000;
-    font-family: 'ADLaM Display', sans-serif;
-}
-.scorebox_headline {
+
+.scorebox_headline_small {
     font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 8px;
+    color: #66FFFF;
     font-family: 'ADLaM Display', sans-serif;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 1.2em;
+}
+
+.scorebox_headline_normal {
+    font-weight: bold;
+    color: #66FFFF;
+    font-family: 'ADLaM Display', sans-serif;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 2.0em;
 }
 
 .scorebox_scoreline {
-    font-size: 1.4em;
-    color: #0078D7;
+    font-size: 4.0em;
+    color: #ffffff;
     font-family: 'ADLaM Display', sans-serif;
+}
+
+.scorebox_table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 3px;
+    table-layout: fixed;
+}
+
+.scorebox_table td {
+    padding: 0 0 0 8px;
+    vertical-align: top;
+    background: none;
 }
