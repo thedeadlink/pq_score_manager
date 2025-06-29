@@ -1,0 +1,32 @@
+/* Add your styles here */
+body {
+    background: #000;
+}
+#scorebox_t1 {
+    border: 1px solid #333;
+    padding: 20px;
+    margin: 20px;
+    background: #f9f9f9;
+    font-size: 1.2em;
+}
+.scorebox {
+    width: 150px;
+    height: 100px;
+    border: 1px solid #333;
+    padding: 20px;
+    margin: 20px;
+    background: #f9f9f9;
+    font-size: 1.2em;
+    float: left;
+    color: #000;
+}
+.scorebox_headline {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+.scorebox_scoreline {
+    font-size: 1.4em;
+    color: #0078D7;
+}
