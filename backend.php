@@ -37,7 +37,11 @@ $showModifyScore = isset($_GET['modify_score']) || isset($_POST['modify_score'])
 
 if (!$showManageTeams && !$showChangeCategories && !$showModifyScore) {
     // Main menu
-    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Main Menu</title></head><body>';
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Main Menu</title>';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '</head><body>';
+    echo '<div class="container">';
     echo '<h2>Main Menu</h2>';
     echo '<ul>';
     echo '<li><a href="?manage_teams=1">Manage Teams</a></li>';
@@ -60,6 +64,7 @@ if (!$showManageTeams && !$showChangeCategories && !$showModifyScore) {
         echo '<em>No teams available.</em>';
     }
     echo '</div>';
+    echo '</div>';
     echo '</body></html>';
     exit;
 }
@@ -77,7 +82,11 @@ if ($showChangeCategories) {
         }
     }
     $currentCategories = isset($config['Categories']) ? intval($config['Categories']) : 12;
-    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Change Categories</title></head><body>';
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Change Categories</title>';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '</head><body>';
+    echo '<div class="container">';
     echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">&larr; Back to main menu</a>';
     echo '<h2>Change Number of Categories</h2>';
     echo '<form method="post">';
@@ -87,6 +96,7 @@ if ($showChangeCategories) {
     echo '<button type="submit" name="set_categories">Change Categories</button>';
     echo '</div>';
     echo '</form>';
+    echo '</div>';
     echo '</body></html>';
     exit;
 }
@@ -105,7 +115,11 @@ if ($showModifyScore) {
     }
     // Step 1: Select category
     if (!isset($_GET['edit_category']) && !isset($_POST['save_scores'])) {
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Modify Score</title></head><body>';
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Modify Score</title>';
+        echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+        echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+        echo '</head><body>';
+        echo '<div class="container">';
         echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">&larr; Back to main menu</a>';
         echo '<h2>Select Category to Modify</h2>';
         echo '<ul>';
@@ -113,13 +127,18 @@ if ($showModifyScore) {
             echo '<li><a href="?edit_category=' . $cat . '">Category ' . $cat . '</a></li>';
         }
         echo '</ul>';
+        echo '</div>';
         echo '</body></html>';
         exit;
     }
     // Step 2: Show form for selected category
     $catIdx = isset($_GET['edit_category']) ? intval($_GET['edit_category']) - 1 : (isset($_POST['category']) ? intval($_POST['category']) : -1);
     if ($catIdx >= 0 && $catIdx < $config['Categories'] && !isset($_POST['save_scores'])) {
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Modify Score</title></head><body>';
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Modify Score</title>';
+        echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+        echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+        echo '</head><body>';
+        echo '<div class="container">';
         echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?modify_score=1">&larr; Back to category selection</a>';
         echo '<h2>Modify Scores for Category ' . ($catIdx + 1) . '</h2>';
         echo '<form method="post">';
@@ -135,6 +154,7 @@ if ($showModifyScore) {
         }
         echo '<button type="submit" name="save_scores">Save</button>';
         echo '</form>';
+        echo '</div>';
         echo '</body></html>';
         exit;
     }
@@ -157,7 +177,11 @@ if ($showModifyScore) {
 }
 
 // Output the HTML form
-echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Team Manager</title></head><body>';
+echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Team Manager</title>';
+echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+echo '</head><body>';
+echo '<div class="container">';
 echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">&larr; Back to main menu</a>';
 echo '<h2>Teams</h2>';
 echo '<form method="post">';
@@ -172,4 +196,5 @@ echo '<input type="text" name="new_team" placeholder="New team name"> ';
 echo '<button type="submit" name="add_team">Add Team</button>';
 echo '</div>';
 echo '</form>';
+echo '</div>';
 echo '</body></html>';

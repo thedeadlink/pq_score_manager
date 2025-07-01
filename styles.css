@@ -63,3 +63,23 @@ body {
     font-size: 1.3em;
     font-family: 'ADLaM Display', cursive, sans-serif;
 }
+
+body { font-family: sans-serif; margin: 0; padding: 0; background: #111; color: #eee; }
+.container { max-width: 480px; margin: 0 auto; padding: 16px; }
+h2, h3 { margin-top: 1.2em; }
+form, ul { width: 100%; }
+input[type="text"], input[type="number"] { width: 90%; max-width: 300px; font-size: 1.1em; padding: 6px; margin: 4px 0; }
+button, input[type="submit"] { font-size: 1.1em; padding: 8px 16px; margin: 6px 0; border-radius: 6px; border: none; background: #66FFFF; color: #111; font-weight: bold; }
+button:active, input[type="submit"]:active { background: #33cccc; }
+div[style*="margin-bottom"] { display: flex; align-items: center; justify-content: space-between; }
+@media (max-width: 600px) {
+  .container { padding: 4px; }
+  h2, h3 { font-size: 1.2em; }
+  button, input[type="submit"] { font-size: 1em; padding: 6px 10px; }
+  input[type="text"], input[type="number"] { font-size: 1em; }
+}
+
+.container a, .container a:visited, .container a:active, .container a:hover {
+    color: #ccc !important;
+    text-decoration: underline;
+}
