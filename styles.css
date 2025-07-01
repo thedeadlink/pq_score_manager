@@ -11,7 +11,7 @@ body {
     font-family: 'ADLaM Display', sans-serif;
     white-space: normal;
     word-break: break-word;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
 .scorebox_headline_normal {
@@ -21,6 +21,15 @@ body {
     white-space: normal;
     word-break: break-word;
     font-size: 2.0em;
+}
+
+.scorebox_headline_large {
+    font-weight: bold;
+    color: #66FFFF;
+    font-family: 'ADLaM Display', sans-serif;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 3.5em;
 }
 
 .scorebox_scoreline {
@@ -40,4 +49,17 @@ body {
     padding: 0 0 0 8px;
     vertical-align: top;
     background: none;
+}
+
+.scoreboard_headline {
+    color: #fff;
+    font-size: 1.3em;
+    font-family: 'ADLaM Display', cursive, sans-serif;
+    font-weight: bold;
+}
+
+.scoreboard_cell {
+    color: #fff;
+    font-size: 1.3em;
+    font-family: 'ADLaM Display', cursive, sans-serif;
 }

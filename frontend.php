@@ -1,3 +1,27 @@
+<?php
+// Data for teams and scores
+$game_config_default = [
+    'teams' => [
+        'Team 1'
+    ],
+    'Categories' => 1
+];
+if (file_exists('game_config.json')) {
+    $game_config = json_decode(file_get_contents('game_config.json'), true);
+} else {
+    $game_config = $game_config_default;
+    file_put_contents('game_config.json', json_encode($game_config_default, JSON_PRETTY_PRINT));
+}
+// Load scores and calculate sum for each team
+$scores = [];
+if (file_exists('scores.json')) {
+    $scores = json_decode(file_get_contents('scores.json'), true);
+}
+$teamSums = [];
+foreach ($game_config['teams'] as $team) {
+    $teamSums[$team] = isset($scores[$team]) ? array_sum($scores[$team]) : 0;
+}
+?>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="styles.css">
@@ -7,32 +31,23 @@
     <body>
         <table class="scorebox_table">
             <tr>
-                <td class="scorebox_headline_normal">Callies and Friends</td>
-                <td class="scorebox_headline_normal">Hopfen und Verstand</td>
-                <td class="scorebox_headline_normal">6 Helle</td>
-                <td class="scorebox_headline_small">Luxusbabypuppenwagen Oberfischbach e.v.</td>
-                <td class="scorebox_headline_normal">Team 5</td>
-                <td class="scorebox_headline_normal">Team 6</td>
-                <td class="scorebox_headline_normal">Team 7</td>
-                <td class="scorebox_headline_normal">Team 8</td>
-                <td class="scorebox_headline_normal">Team x</td>
-                <td class="scorebox_headline_normal">Team 2</td>
-                <td class="scorebox_headline_normal">Team 3</td>
-                <td class="scorebox_headline_normal">Team 4</td>
+                <?php foreach ($game_config['teams'] as $team): 
+                    $len = mb_strlen($team);
+                    if ($len < 10) {
+                        $class = 'scorebox_headline_large';
+                    } elseif ($len < 20) {
+                        $class = 'scorebox_headline_normal';
+                    } else {
+                        $class = 'scorebox_headline_small';
+                    }
+                ?>
+                    <td class="<?php echo $class; ?>"><?php echo htmlspecialchars($team); ?></td>
+                <?php endforeach; ?>
             </tr>
             <tr>
-                <td class="scorebox_scoreline">23</td>
-                <td class="scorebox_scoreline">12</td>
-                <td class="scorebox_scoreline">3</td>
-                <td class="scorebox_scoreline">33</td>
-                <td class="scorebox_scoreline">564</td>
-                <td class="scorebox_scoreline">4</td>
-                <td class="scorebox_scoreline">42</td>
-                <td class="scorebox_scoreline">22</td>
-                <td class="scorebox_scoreline">23</td>
-                <td class="scorebox_scoreline">12</td>
-                <td class="scorebox_scoreline">3</td>
-                <td class="scorebox_scoreline">33</td>
+                <?php foreach ($game_config['teams'] as $team): ?>
+                    <td class="scorebox_scoreline"><?php echo $teamSums[$team]; ?></td>
+                <?php endforeach; ?>
             </tr>
         </table>
     </body>
