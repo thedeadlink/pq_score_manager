@@ -1,182 +1,57 @@
 {
-    "Callies and Friends": [
-        {
-            "score": 1,
-            "joker": false
-        },
+    "Team 1": [
+        0
+    ],
+    "Fdghh": [
         {
             "score": 5,
             "joker": false
         },
         {
-            "score": 11,
+            "score": 44,
             "joker": false
         },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0
     ],
-    "Die Quizgeburten": [
-        {
-            "score": 3,
+    "Tfghu": {
+        "0": {
+            "score": 2,
             "joker": false
         },
+        "1": {
+            "score": 5588,
+            "joker": true
+        },
+        "2": 0,
+        "5": {
+            "score": 0,
+            "joker": false
+        }
+    },
+    "Gggh": [
         {
-            "score": 4,
+            "score": 1,
             "joker": false
         },
         {
             "score": 8,
             "joker": false
         },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0
     ],
-    "Das Team, das ich persönlich am liebsten mag": [
-        {
-            "score": 3,
-            "joker": false
-        },
-        5,
-        7,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "Besserquizzer": [
-        {
-            "score": 3,
-            "joker": false
-        },
-        {
+    "Ggg": {
+        "0": {
             "score": 4,
-            "joker": false
-        },
-        {
-            "score": 16,
-            "joker": false
-        },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "Test 123": [
-        {
-            "score": 2,
-            "joker": false
-        },
-        {
-            "score": 22653,
             "joker": true
         },
-        {
-            "score": 0,
+        "1": {
+            "score": 66,
+            "joker": false
+        },
+        "2": 0,
+        "5": {
+            "score": 213,
             "joker": false
         }
-    ],
-    "Das ist schon Krass": [
-        {
-            "score": 2,
-            "joker": false
-        },
-        {
-            "score": 5,
-            "joker": false
-        },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "Übelriechende Gülle": [
-        {
-            "score": 5,
-            "joker": false
-        },
-        {
-            "score": 4,
-            "joker": true
-        },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "Megateam": [
-        {
-            "score": 4,
-            "joker": false
-        },
-        {
-            "score": 2,
-            "joker": false
-        },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "Superteam": [
-        {
-            "score": 1,
-            "joker": true
-        },
-        {
-            "score": 1,
-            "joker": false
-        },
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-    ]
+    }
 }

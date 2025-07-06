@@ -1,4 +1,51 @@
 <?php
+// --- Simple authentication ---
+$authCookieName = 'pq_auth';
+$clientsFile = __DIR__ . '/clients.json';
+$authPassword = 'QWer1234';
+$authenticated = false;
+
+// Load client hashes
+$clientHashes = file_exists($clientsFile) ? json_decode(file_get_contents($clientsFile), true) : [];
+if (!is_array($clientHashes)) $clientHashes = [];
+
+if (isset($_COOKIE[$authCookieName]) && in_array($_COOKIE[$authCookieName], $clientHashes, true)) {
+    $authenticated = true;
+}
+
+if (!$authenticated && isset($_POST['auth_password'])) {
+    if ($_POST['auth_password'] === $authPassword) {
+        // Generate a random hash
+        $hash = bin2hex(random_bytes(32));
+        $clientHashes[] = $hash;
+        file_put_contents($clientsFile, json_encode($clientHashes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        setcookie($authCookieName, $hash, time() + 60*60*24*30, '/'); // 30 days
+        $authenticated = true;
+        // Reload to set cookie
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    } else {
+        $authError = 'Incorrect password.';
+    }
+}
+
+if (!$authenticated) {
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Login</title>';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '</head><body>';
+    echo '<div class="container">';
+    echo '<h2>Authentication Required</h2>';
+    if (!empty($authError)) echo '<div style="color:red;">' . htmlspecialchars($authError) . '</div>';
+    echo '<form method="post">';
+    echo '<input type="password" name="auth_password" placeholder="Enter password" required autofocus> ';
+    echo '<button type="submit">Login</button>';
+    echo '</form>';
+    echo '</div>';
+    echo '</body></html>';
+    exit;
+}
+
 // Path to the JSON config file
 $jsonFile = __DIR__ . '/game_config.json';
 
