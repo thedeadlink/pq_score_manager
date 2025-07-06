@@ -1,0 +1,55 @@
+{
+    "Teams": [
+        {
+            "name": "Team A",
+            "categories": [
+                {
+                    "score": 3,
+                    "joker": true
+                },
+                {
+                    "score": 0,
+                    "joker": false
+                },
+                {
+                    "score": 0,
+                    "joker": false
+                }
+            ]
+        },
+        {
+            "name": "Team B",
+            "categories": [
+                {
+                    "score": 0,
+                    "joker": false
+                },
+                {
+                    "score": 0,
+                    "joker": false
+                },
+                {
+                    "score": 0,
+                    "joker": false
+                }
+            ]
+        },
+        {
+            "name": "Team C",
+            "categories": [
+                {
+                    "score": 0,
+                    "joker": false
+                },
+                {
+                    "score": 0,
+                    "joker": false
+                },
+                {
+                    "score": 0,
+                    "joker": false
+                }
+            ]
+        }
+    ]
+}

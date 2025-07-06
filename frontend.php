@@ -1,26 +1,69 @@
 <?php
-// Data for teams and scores
-$game_config_default = [
-    'teams' => [
-        'Team 1'
-    ],
-    'Categories' => 1
-];
-if (file_exists('game_config.json')) {
-    $game_config = json_decode(file_get_contents('game_config.json'), true);
+
+
+// load game configuration or die it if not exists
+$game_config_file = __DIR__ . '/game_config.json';
+if (file_exists($game_config_file)) {
+    $game_config = json_decode(file_get_contents($game_config_file), true);
 } else {
-    $game_config = $game_config_default;
-    file_put_contents('game_config.json', json_encode($game_config_default, JSON_PRETTY_PRINT));
+    echo "game_config.json not found. Please create it with calling backend.php first.";
+    die();
 }
-// Load scores and calculate sum for each team
-$scores = [];
-if (file_exists('scores.json')) {
-    $scores = json_decode(file_get_contents('scores.json'), true);
+
+// Load scores from a file or initialize if not present
+$scoresFile = __DIR__ . '/scores.json';
+if (file_exists($scoresFile)) {
+    $scores = json_decode(file_get_contents($scoresFile), true);
+} else {
+    // Initialize scores: team => [0, 0, ...]
+    $scores = [];
+    
+    foreach ($teams as $number => $team) {
+            for ($i = 0; $i < $numCategories; $i++) {
+                $scores[$team][$i] = 
+                    ['score' => 0, 'joker' => false]; // Initialize with score and joker
+            }
+    }
+    print_r($scores); // Debugging line to check initial scores structure
+    file_put_contents($scoresFile, json_encode($scores, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
+
+// Ensure all teams and categories are present in scores
+foreach ($teams as $team) {
+    if (!isset($scores[$team]) || !is_array($scores[$team])) {
+        $scores[$team] = array_fill(0, $numCategories, 0);
+    } elseif (count($scores[$team]) < $numCategories) {
+        $scores[$team] = array_pad($scores[$team], $numCategories, 0);
+    } elseif (count($scores[$team]) > $numCategories) {
+        $scores[$team] = array_slice($scores[$team], 0, $numCategories);
+    }
+}
+#echo "Scores\n";
+#print_r($scores); // Debugging line to check scores structure
+
+// Remove scores for teams that no longer exist
+foreach (array_keys($scores) as $team) {
+    if (!in_array($team, $teams)) {
+        unset($scores[$team]);
+    }
+}
+#print_r($teams); // Debugging line to check scores after cleanup
+
+// Calculate sums and sort
 $teamSums = [];
-foreach ($game_config['teams'] as $team) {
-    $teamSums[$team] = isset($scores[$team]) ? array_sum($scores[$team]) : 0;
+foreach ($teams as $team) {
+    $teamSums[$team] = 0; // Initialize team sums
+
+    for ($i = 0; $i < $numCategories; $i++) {
+        if($scores[$team][$i]['joker'] === true) {
+            $teamSums[$team] += 2*($scores[$team][$i]['score']);
+        } else {
+            $teamSums[$team] += $scores[$team][$i]['score'];
+        }       
+    }        
 }
+arsort($teamSums);
+
 ?>
 <html>
     <head>

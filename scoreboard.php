@@ -12,9 +12,14 @@ if (file_exists($scoresFile)) {
 } else {
     // Initialize scores: team => [0, 0, ...]
     $scores = [];
-    foreach ($teams as $team) {
-        $scores[$team] = array_fill(0, $numCategories, 0);
+    
+    foreach ($teams as $number => $team) {
+            for ($i = 0; $i < $numCategories; $i++) {
+                $scores[$team][$i] = 
+                    ['score' => 0, 'joker' => false]; // Initialize with score and joker
+            }
     }
+    print_r($scores); // Debugging line to check initial scores structure
     file_put_contents($scoresFile, json_encode($scores, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
@@ -28,6 +33,8 @@ foreach ($teams as $team) {
         $scores[$team] = array_slice($scores[$team], 0, $numCategories);
     }
 }
+#echo "Scores\n";
+#print_r($scores); // Debugging line to check scores structure
 
 // Remove scores for teams that no longer exist
 foreach (array_keys($scores) as $team) {
@@ -35,13 +42,24 @@ foreach (array_keys($scores) as $team) {
         unset($scores[$team]);
     }
 }
+#print_r($teams); // Debugging line to check scores after cleanup
 
 // Calculate sums and sort
 $teamSums = [];
 foreach ($teams as $team) {
-    $teamSums[$team] = array_sum($scores[$team]);
+    $teamSums[$team] = 0; // Initialize team sums
+
+    for ($i = 0; $i < $numCategories; $i++) {
+        if($scores[$team][$i]['joker'] === true) {
+            $teamSums[$team] += 2*($scores[$team][$i]['score']);
+        } else {
+            $teamSums[$team] += $scores[$team][$i]['score'];
+        }       
+    }        
 }
 arsort($teamSums);
+
+#print_r($teamSums); // Debugging line to check team sums
 
 // Output HTML
 ?>
