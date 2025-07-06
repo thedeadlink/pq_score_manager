@@ -201,9 +201,36 @@ if (!$showManageTeams && !$showModifyScore && !$showRenameTeam) {
     if (!empty($teams)) {
         echo '<ul>';
         foreach ($teams as $idx => $team) {
-            echo '<li>' . htmlspecialchars($team['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</li>';
+            echo '<li>(' . $idx . ') ' . htmlspecialchars($team['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</li>';
         }
         echo '</ul>';
+        echo '<h3>Scores</h3>';
+        echo '<div class="teams-table-backend-container" style="margin-left: 16px;">';
+        echo '<table class="teams-table-backend" border="1" cellpadding="4" cellspacing="0">';
+        echo '<tr><th class="teams-table-backend-header">Team</th>';
+        for ($i = 0; $i < $numCategories; $i++) {
+            echo '<th class="teams-table-backend-header">' . ($i + 1) . '</th>';
+        }
+        echo '<th class="teams-table-backend-header-total">Total</th>';
+        echo '</tr>';
+        foreach ($teams as $idx => $team) {
+            echo '<tr><th class="teams-table-backend-header">(' . $idx . ')</th>';
+            foreach ($team['categories'] as $catIdx => $cat) {
+                $score = isset($cat['score']) ? (int)$cat['score'] : 0;
+                if (isset($cat['joker']) && $cat['joker']) {
+                    $joker = ' (J)';
+                    $score = $score * 2; // joker doubles the score
+                } else {
+                    $joker = '';
+                }
+                echo '<td class="teams-table-backend-cell">' . $score . $joker . '</td>';
+            }
+            $totalScore = array_sum(array_column($team['categories'], 'score'));
+            echo '<td class="teams-table-backend-cell-total">' . $totalScore . '</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '</div>';
     } else {
         echo '<em>No teams available.</em>';
     }
