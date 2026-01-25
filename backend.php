@@ -40,7 +40,7 @@ if (!$authenticated) {
     echo '<link rel="stylesheet" type="text/css" href="styles.css">';
     echo '</head><body>';
     echo '<div class="container">';
-    echo '<h2>Authentication Required</h2>';
+    echo '<h2>Authentication Required TEST</h2>';
     if (!empty($authError)) echo '<div style="color:red;">' . htmlspecialchars($authError) . '</div>';
     echo '<form method="post">';
     echo '<input type="password" name="auth_password" placeholder="Enter password" required autofocus> ';
