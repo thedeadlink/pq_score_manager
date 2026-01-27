@@ -21,6 +21,7 @@ $authError = '';
 $currentClientInfo = null;
 $showManageTeams = false;
 $showCreateNewGame = false;
+$showManageCategories = false;
 
 // HTML Template
 $htmlHead = '
@@ -28,7 +29,13 @@ $htmlHead = '
     <html lang="en">
     <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">';
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        function toggleRename(teamId) {
+            const renameControls = document.getElementById("rename-controls-" + teamId);
+            renameControls.classList.toggle("visible");
+        }
+    </script>';
 $htmlTitle = 'Pub Quiz Score Manager';
 
 // Load existing clients
@@ -247,6 +254,16 @@ if (isset($_POST['back_to_menu_from_create'])) {
     $showCreateNewGame = false;
 }
 
+// Check if manage categories button was clicked
+if (isset($_POST['manage_categories'])) {
+    $showManageCategories = true;
+}
+
+// Back to Menu Handler from Manage Categories
+if (isset($_POST['back_to_menu_from_categories'])) {
+    $showManageCategories = false;
+}
+
 /**************************************************************************************************************************************
  * 
  * Team Management Handlers
@@ -392,12 +409,24 @@ if ($showManageTeams) {
             echo '<div class="team-card">';
             echo '<span><strong>ID: ' . $teamId . '</strong> - ' . $teamName . '</span>';
             
-            echo '<form method="post" class="team-actions-form">';
+            echo '<div style="display: flex; gap: 5px; width: 100%;">';
+            
+            // Toggle rename button
+            echo '<button type="button" onclick="toggleRename(' . $teamId . ')" class="toggle-rename-button">Toggle Rename Controls</button>';
+            
+            // Hidden rename controls
+            echo '<div id="rename-controls-' . $teamId . '" class="rename-controls">';
+            echo '<form method="post" class="team-actions-form" style="display: flex; gap: 5px; width: 100%;">';
             echo '<input type="hidden" name="manage_teams" value="1">';
             echo '<input type="hidden" name="rename_team_id" value="' . $teamId . '">';
             echo '<input type="text" name="rename_team_name" value="' . $teamName . '" maxlength="255" class="team-name-input">';
             echo '<button type="submit" name="rename_team" value="1" class="rename-button">Rename</button>';
+            echo '</form>';
+            echo '</div>';
             
+            // Delete button
+            echo '<form method="post" style="display: inline; margin: 0;">';
+            echo '<input type="hidden" name="manage_teams" value="1">';
             echo '<button type="submit" name="delete_team_id" value="' . $teamId . '" onclick="return confirm(\'Delete this team?\');" class="button-danger">Delete</button>';
             echo '</form>';
             
@@ -421,6 +450,29 @@ if ($showManageTeams) {
     exit;
 }
 
+// Manage Categories Section
+if ($showManageCategories) {
+    echo $htmlHead;
+    echo '<title>' . $htmlTitle . '</title>';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '</head>';
+    echo '<body>';
+    echo '<div class="container">';
+    echo '<h1>Manage Categories</h1>';
+    
+    echo '<form method="post" class="form-back-button">';
+    echo '<input type="hidden" name="manage_categories" value="1">';
+    echo '<button type="submit" name="back_to_menu_from_categories" value="1">← Back to Menu</button>';
+    echo '</form>';
+    
+    echo '<p>Categories management coming soon...</p>';
+    
+    echo '</div>';
+    echo '</body>';
+    echo '</html>';
+    exit;
+}
+
 // Main Menu Display
 echo $htmlHead;
 echo '<title>' . $htmlTitle . '</title>';
@@ -432,6 +484,7 @@ echo '<h1>Menu</h1>';
 echo '<form method="post">';
 echo '<div class="button-group">';
 echo '<button type="submit" name="manage_teams" value="1">Manage Teams</button>';
+echo '<button type="submit" name="manage_categories" value="1">Manage Categories</button>';
 echo '<button type="submit" name="create_new_game" value="1" class="button-create-game">Create New Game</button>';
 echo '<button type="submit" name="logout" value="1">Logout</button>';
 echo '</div>';
