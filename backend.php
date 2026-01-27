@@ -1,15 +1,68 @@
 <?php
 /**************************************************************************************************************************************
  * 
- * Authentication System with Client Tracking
+ * Configuration & Variables
  * 
  **************************************************************************************************************************************/
 
-$authCookieName = 'pq_auth';
-$clientsFile = __DIR__ . '/clients.json';
+// Token and Authentication
+$secretToken = 'GbJuRBpqamPcZRZU3pVfGxb7sonVzxCBfksgnjkkRHfbZneW7FKDFqK2Xw2FyHq2cLJavcYuiiqRGfrYyCJoQr34yH4jag6ecKP9';
+$providedToken = $_GET['token'] ?? $_POST['token'] ?? null;
 $authPassword = 'QWer1234';
+$authCookieName = 'pq_auth';
+
+// File Paths
+$clientsFile = __DIR__ . '/clients.json';
+$gameFile = __DIR__ . '/game.json';
+
+// State Variables
 $authenticated = false;
 $authError = '';
+$currentClientInfo = null;
+$showManageTeams = false;
+$showCreateNewGame = false;
+
+// HTML Template
+$htmlHead = '
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">';
+$htmlTitle = 'Pub Quiz Score Manager';
+
+// Load existing clients
+$clients = [];
+if (file_exists($clientsFile)) {
+    $clients = json_decode(file_get_contents($clientsFile), true);
+    if (!is_array($clients)) {
+        $clients = [];
+    }
+}
+
+// Load game data
+$game = [];
+if (file_exists($gameFile)) {
+    $game = json_decode(file_get_contents($gameFile), true);
+    if (!is_array($game)) {
+        $game = [];
+    }
+} else {
+    $game = ['Teams' => []];
+    // Create the file with initial structure
+    file_put_contents($gameFile, json_encode($game, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+// Ensure Teams key exists
+if (!isset($game['Teams'])) {
+    $game['Teams'] = [];
+}
+
+/**************************************************************************************************************************************
+ * 
+ * Helper Functions
+ * 
+ **************************************************************************************************************************************/
 
 // Helper function to parse browser info from user agent
 function parseBrowserInfo($userAgent) {
@@ -63,14 +116,11 @@ function getClientIP() {
     }
 }
 
-// Load existing clients
-$clients = [];
-if (file_exists($clientsFile)) {
-    $clients = json_decode(file_get_contents($clientsFile), true);
-    if (!is_array($clients)) {
-        $clients = [];
-    }
-}
+/**************************************************************************************************************************************
+ * 
+ * Token Validation
+ * 
+ **************************************************************************************************************************************/
 
 // Check if user has valid authentication cookie
 if (isset($_COOKIE[$authCookieName])) {
@@ -121,8 +171,8 @@ if (!$authenticated && isset($_POST['auth_password'])) {
         setcookie($authCookieName, $hash, time() + (60 * 60 * 24 * 30), '/');
         $authenticated = true;
         
-        // Reload to initialize session
-        header('Location: ' . $_SERVER['PHP_SELF']);
+        // Reload to initialize session with token
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?token=' . urlencode($providedToken));
         exit;
     } else {
         $authError = 'Incorrect password.';
@@ -131,30 +181,17 @@ if (!$authenticated && isset($_POST['auth_password'])) {
 
 // Display login form if not authenticated
 if (!$authenticated) {
-    echo '<!DOCTYPE html>';
-    echo '<html lang="en">';
-    echo '<head>';
-    echo '<meta charset="UTF-8">';
-    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    echo $htmlHead;
     echo '<title>Authentication Required</title>';
-    echo '<style>';
-    echo 'body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }';
-    echo '.container { max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }';
-    echo 'h2 { color: #333; text-align: center; }';
-    echo 'form { display: flex; flex-direction: column; }';
-    echo 'input[type="password"] { padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }';
-    echo 'button { padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; }';
-    echo 'button:hover { background: #0056b3; }';
-    echo '.error { color: red; margin-bottom: 15px; text-align: center; }';
-    echo '</style>';
-    echo '</head>';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
     echo '<body>';
-    echo '<div class="container">';
-    echo '<h2>Authentication Required</h2>';
+    echo '<div class="container login">';
+    echo '<h2 class="login-title">Authentication Required</h2>';
     if (!empty($authError)) {
         echo '<div class="error">' . htmlspecialchars($authError, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</div>';
     }
     echo '<form method="post">';
+    echo '<input type="hidden" name="token" value="' . htmlspecialchars($providedToken, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '">';
     echo '<input type="password" name="auth_password" placeholder="Enter password" required autofocus>';
     echo '<button type="submit">Login</button>';
     echo '</form>';
@@ -166,65 +203,239 @@ if (!$authenticated) {
 
 /**************************************************************************************************************************************
  * 
- * Authenticated Content Area
+ * Logout Handler
  * 
  **************************************************************************************************************************************/
 
-// Get current client info
-$currentClientInfo = null;
-foreach ($clients as $client) {
-    if (isset($client['hash']) && $client['hash'] === $_COOKIE[$authCookieName]) {
-        $currentClientInfo = $client;
-        break;
+if (isset($_POST['logout'])) {
+    // Remove current client from clients list
+    foreach ($clients as $key => $client) {
+        if (isset($client['hash']) && $client['hash'] === $_COOKIE[$authCookieName]) {
+            unset($clients[$key]);
+            break;
+        }
+    }
+    
+    // Save updated client list
+    file_put_contents($clientsFile, json_encode($clients, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    
+    // Clear cookie
+    setcookie($authCookieName, '', time() - 3600, '/');
+    
+    // Redirect to login
+    header('Location: ' . $_SERVER['PHP_SELF'] . '?token=' . urlencode($providedToken));
+    exit;
+}
+
+// Check if manage teams button was clicked
+if (isset($_POST['manage_teams'])) {
+    $showManageTeams = true;
+}
+
+// Back to Menu Handler
+if (isset($_POST['back_to_menu'])) {
+    $showManageTeams = false;
+}
+
+// Check if create new game button was clicked
+if (isset($_POST['create_new_game'])) {
+    $showCreateNewGame = true;
+}
+
+// Back from Create New Game Handler
+if (isset($_POST['back_to_menu_from_create'])) {
+    $showCreateNewGame = false;
+}
+
+/**************************************************************************************************************************************
+ * 
+ * Team Management Handlers
+ * 
+ **************************************************************************************************************************************/
+
+// Add Team Handler
+if ($showManageTeams && isset($_POST['add_team'])) {
+    $teamName = trim($_POST['new_team_name'] ?? '');
+    if (!empty($teamName) && strlen($teamName) <= 255) {
+        // Get next ID
+        $nextId = 1;
+        foreach ($game['Teams'] as $team) {
+            if (isset($team['id']) && $team['id'] >= $nextId) {
+                $nextId = $team['id'] + 1;
+            }
+        }
+        
+        // Add new team
+        $game['Teams'][] = [
+            'id' => $nextId,
+            'name' => $teamName
+        ];
+        
+        // Save game file
+        file_put_contents($gameFile, json_encode($game, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 }
 
-echo '<!DOCTYPE html>';
-echo '<html lang="en">';
-echo '<head>';
-echo '<meta charset="UTF-8">';
-echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<title>Pub Quiz Score Manager</title>';
-echo '<style>';
-echo 'body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }';
-echo '.container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }';
-echo 'h1 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }';
-echo 'h2 { color: #555; margin-top: 25px; }';
-echo 'p { color: #666; }';
-echo '.success { color: green; font-weight: bold; }';
-echo '.info-grid { display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin: 20px 0; }';
-echo '.info-label { font-weight: bold; color: #333; }';
-echo '.info-value { color: #666; word-break: break-all; }';
-echo '.divider { border-top: 1px solid #ddd; margin: 20px 0; }';
-echo '</style>';
+// Delete Team Handler
+if ($showManageTeams && isset($_POST['delete_team_id'])) {
+    $deleteId = intval($_POST['delete_team_id']);
+    foreach ($game['Teams'] as $key => $team) {
+        if (isset($team['id']) && $team['id'] === $deleteId) {
+            unset($game['Teams'][$key]);
+            break;
+        }
+    }
+    $game['Teams'] = array_values($game['Teams']); // Reindex array
+    file_put_contents($gameFile, json_encode($game, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+// Rename Team Handler
+if ($showManageTeams && isset($_POST['rename_team_id']) && isset($_POST['rename_team_name'])) {
+    $renameId = intval($_POST['rename_team_id']);
+    $newName = trim($_POST['rename_team_name']);
+    if (!empty($newName) && strlen($newName) <= 255) {
+        foreach ($game['Teams'] as &$team) {
+            if (isset($team['id']) && $team['id'] === $renameId) {
+                $team['name'] = $newName;
+                break;
+            }
+        }
+        unset($team);
+        file_put_contents($gameFile, json_encode($game, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+}
+
+/**************************************************************************************************************************************
+ * 
+ * Create New Game Handler
+ * 
+ **************************************************************************************************************************************/
+
+if ($showCreateNewGame && isset($_POST['confirm_create_new_game'])) {
+    $confirmText = $_POST['confirm_text'] ?? '';
+    
+    if ($confirmText === 'delete game') {
+        // Backup existing game file
+        if (file_exists($gameFile)) {
+            $timestamp = date('Y-m-d_Hi');
+            $backupFile = __DIR__ . '/game.json.' . $timestamp . '.backup';
+            rename($gameFile, $backupFile);
+        }
+        
+        // Create new game file
+        $newGame = ['Teams' => []];
+        file_put_contents($gameFile, json_encode($newGame, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        
+        // Reload game data
+        $game = $newGame;
+        
+        // Reset state and go back to menu
+        $showCreateNewGame = false;
+    }
+}
+
+// Create New Game Section
+if ($showCreateNewGame) {
+    echo $htmlHead;
+    echo '<title>' . $htmlTitle . '</title>';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '</head>';
+    echo '<body>';
+    echo '<div class="container">';
+    echo '<h1>Create New Game</h1>';
+    
+    echo '<div class="alert-warning">';
+    echo '<strong>⚠ Warning:</strong> This will backup the current game and create a new one.';
+    echo '</div>';
+    
+    echo '<p>To confirm this action, type <strong>"delete game"</strong> in the field below:</p>';
+    
+    echo '<form method="post">';
+    echo '<input type="hidden" name="create_new_game" value="1">';
+    echo '<input type="text" name="confirm_text" placeholder="Type: delete game" required autofocus>';
+    echo '<button type="submit" name="confirm_create_new_game" value="1" class="button-danger">Create New Game</button>';
+    echo '</form>';
+    
+    echo '<form method="post" class="form-cancel">';
+    echo '<input type="hidden" name="create_new_game" value="1">';
+    echo '<button type="submit" name="back_to_menu_from_create" value="1">← Cancel</button>';
+    echo '</form>';
+    
+    echo '</div>';
+    echo '</body>';
+    echo '</html>';
+    exit;
+}
+
+// Manage Teams Section
+if ($showManageTeams) {
+    echo $htmlHead;
+    echo '<title>' . $htmlTitle . '</title>';
+    echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '</head>';
+    echo '<body>';
+    echo '<div class="container">';
+    echo '<h1>Manage Teams</h1>';
+    
+    echo '<form method="post" class="form-back-button">';
+    echo '<input type="hidden" name="manage_teams" value="1">';
+    echo '<button type="submit" name="back_to_menu" value="1">← Back to Menu</button>';
+    echo '</form>';
+    
+    echo '<h2>Teams</h2>';
+    if (!empty($game['Teams'])) {
+        echo '<div class="teams-list-container">';
+        foreach ($game['Teams'] as $team) {
+            $teamId = $team['id'] ?? 0;
+            $teamName = htmlspecialchars($team['name'] ?? 'Unnamed Team', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            
+            echo '<div class="team-card">';
+            echo '<span><strong>ID: ' . $teamId . '</strong> - ' . $teamName . '</span>';
+            
+            echo '<form method="post" class="team-actions-form">';
+            echo '<input type="hidden" name="manage_teams" value="1">';
+            echo '<input type="hidden" name="rename_team_id" value="' . $teamId . '">';
+            echo '<input type="text" name="rename_team_name" value="' . $teamName . '" maxlength="255" class="team-name-input">';
+            echo '<button type="submit" name="rename_team" value="1" class="rename-button">Rename</button>';
+            
+            echo '<button type="submit" name="delete_team_id" value="' . $teamId . '" onclick="return confirm(\'Delete this team?\');" class="button-danger">Delete</button>';
+            echo '</form>';
+            
+            echo '</div>';
+        }
+        echo '</div>';
+    } else {
+        echo '<p>No teams available.</p>';
+    }
+    
+    echo '<h2 style="margin-top: 30px;">Add New Team</h2>';
+    echo '<form method="post">';
+    echo '<input type="hidden" name="manage_teams" value="1">';
+    echo '<input type="text" name="new_team_name" placeholder="Team name (max 255 characters)" maxlength="255" required>';
+    echo '<button type="submit" name="add_team" value="1">Add Team</button>';
+    echo '</form>';
+    
+    echo '</div>';
+    echo '</body>';
+    echo '</html>';
+    exit;
+}
+
+// Main Menu Display
+echo $htmlHead;
+echo '<title>' . $htmlTitle . '</title>';
+echo '<link rel="stylesheet" type="text/css" href="styles.css">';
 echo '</head>';
 echo '<body>';
 echo '<div class="container">';
-echo '<h1>✓ Authentication Successful</h1>';
-echo '<p>Welcome to the Pub Quiz Score Manager! Your client has been authenticated.</p>';
-
-if ($currentClientInfo) {
-    echo '<h2>Client Information</h2>';
-    echo '<div class="info-grid">';
-    echo '<div class="info-label">Browser:</div>';
-    echo '<div class="info-value">' . htmlspecialchars($currentClientInfo['browser'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . ' ' . htmlspecialchars($currentClientInfo['browser_version'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</div>';
-    echo '<div class="info-label">IP Address:</div>';
-    echo '<div class="info-value">' . htmlspecialchars($currentClientInfo['ip_address'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</div>';
-    echo '<div class="info-label">Authenticated:</div>';
-    echo '<div class="info-value">' . htmlspecialchars($currentClientInfo['authenticated_at'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</div>';
-    echo '<div class="info-label">Last Seen:</div>';
-    echo '<div class="info-value">' . htmlspecialchars($currentClientInfo['last_seen'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</div>';
-    echo '<div class="info-label">Cookie Hash:</div>';
-    echo '<div class="info-value">' . htmlspecialchars(substr($currentClientInfo['hash'], 0, 16), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '...</div>';
-    echo '</div>';
-    
-    echo '<div class="divider"></div>';
-    echo '<h2>Additional Details</h2>';
-    echo '<p><strong>Full User Agent:</strong></p>';
-    echo '<p style="font-family: monospace; background: #f9f9f9; padding: 10px; border-radius: 4px; overflow-x: auto;">' . htmlspecialchars($currentClientInfo['user_agent'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</p>';
-}
-
-echo '<p style="color: #999; font-size: 12px;">Your authentication will expire in 30 days.</p>';
+echo '<h1>Menu</h1>';
+echo '<form method="post">';
+echo '<div class="button-group">';
+echo '<button type="submit" name="manage_teams" value="1">Manage Teams</button>';
+echo '<button type="submit" name="create_new_game" value="1" class="button-create-game">Create New Game</button>';
+echo '<button type="submit" name="logout" value="1">Logout</button>';
+echo '</div>';
+echo '</form>';
 echo '</div>';
 echo '</body>';
 echo '</html>';

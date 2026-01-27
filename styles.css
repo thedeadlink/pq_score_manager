@@ -1,0 +1,229 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Login Container */
+.container.login {
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+/* Headings */
+h1 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+h2 {
+    color: #555;
+    margin-top: 25px;
+}
+
+h2.login-title {
+    color: #333;
+    text-align: center;
+}
+
+/* Paragraphs */
+p {
+    color: #666;
+}
+
+p.footer-text {
+    color: #999;
+    font-size: 12px;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="password"],
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+input[type="password"]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Button Styles */
+button,
+input[type="submit"] {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: #0056b3;
+}
+
+/* Error Messages */
+.error {
+    color: red;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Success Messages */
+.success {
+    color: green;
+    font-weight: bold;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.info-value {
+    color: #666;
+    word-break: break-all;
+}
+
+/* Divider */
+.divider {
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Code/User Agent Display */
+code,
+.code-block {
+    font-family: monospace;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Menu and Form Layout */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-create-game {
+    background: #ffc107 !important;
+    color: black !important;
+}
+
+.button-danger {
+    background: #dc3545 !important;
+}
+
+.button-danger:hover {
+    background: #c82333 !important;
+}
+
+/* Forms and Sections */
+.form-back-button {
+    margin-bottom: 20px;
+}
+
+.form-cancel {
+    margin-top: 15px;
+}
+
+.add-team-section {
+    margin-top: 30px;
+}
+
+/* Teams List */
+.teams-list-container {
+    margin: 20px 0;
+}
+
+.team-card {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.team-actions-form {
+    display: inline;
+    margin: 0;
+}
+
+.team-name-input {
+    width: 150px;
+    margin-right: 5px;
+}
+
+.rename-button {
+    margin-right: 5px;
+}
+
+/* Alert and Warning Styles */
+.alert-warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
