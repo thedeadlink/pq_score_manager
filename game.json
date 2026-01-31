@@ -1,3 +1,193 @@
 {
-    "Teams": []
+    "Teams": [
+        {
+            "id": 1,
+            "name": "Team1",
+            "scores": {
+                "1": {
+                    "score": 2,
+                    "joker": true
+                },
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "Team2",
+            "scores": {
+                "1": {
+                    "score": 5,
+                    "joker": false
+                },
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 3,
+            "name": "Team3",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 4,
+            "name": "Team4",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 5,
+            "name": "Team5",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 6,
+            "name": "Team6",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 7,
+            "name": "Team7",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 8,
+            "name": "Team8",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 9,
+            "name": "Team9",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 10,
+            "name": "Team10",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 11,
+            "name": "Team11",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 12,
+            "name": "Team12",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 13,
+            "name": "Team13",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 14,
+            "name": "Team14",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 15,
+            "name": "Team15",
+            "scores": {
+                "8": {
+                    "score": 24,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 16,
+            "name": "Team16",
+            "scores": {
+                "8": {
+                    "score": 23,
+                    "joker": true
+                }
+            }
+        },
+        {
+            "id": 17,
+            "name": "Team17",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        },
+        {
+            "id": 18,
+            "name": "Team18",
+            "scores": {
+                "8": {
+                    "score": 0,
+                    "joker": false
+                }
+            }
+        }
+    ],
+    "numCategories": 24
 }

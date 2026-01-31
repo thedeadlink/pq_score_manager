@@ -1,0 +1,51 @@
+{
+    "Teams": [
+        {
+            "id": 1,
+            "name": "Das Team welches mir persönlich am besten gefällt"
+        },
+        {
+            "id": 2,
+            "name": "Team 3"
+        },
+        {
+            "id": 3,
+            "name": "Team 3"
+        },
+        {
+            "id": 4,
+            "name": "Team 3"
+        },
+        {
+            "id": 5,
+            "name": "Team 3"
+        },
+        {
+            "id": 6,
+            "name": "Team 3"
+        }
+    ],
+    "Categories": [
+        {
+            "id": 1,
+            "name": "Category 1"
+        },
+        {
+            "id": 2,
+            "name": "Category 2"
+        },
+        {
+            "id": 3,
+            "name": "Category 3"
+        },
+        {
+            "id": 4,
+            "name": "Category 4"
+        },
+        {
+            "id": 5,
+            "name": "Category 5"
+        }
+    ],
+    "numCategories": 7
+}

@@ -1,0 +1,19 @@
+{
+    "Teams": [
+        {
+            "id": 1,
+            "name": "Team1",
+            "scores": [
+                2,
+                {
+                    "score": 2,
+                    "joker": true
+                },
+                0,
+                0,
+                5
+            ]
+        }
+    ],
+    "numCategories": 25
+}

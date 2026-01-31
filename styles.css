@@ -191,18 +191,33 @@ code,
     /* Team card mobile layout */
     .team-card {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 12px;
         padding: 12px;
     }
 
-    .team-card span {
-        margin-bottom: 12px;
-        word-break: break-word;
+    .team-info {
+        grid-template-columns: 50px 1fr;
         width: 100%;
     }
 
-    .team-card > div {
-        width: 100% !important;
+    .team-buttons-container {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+
+    .team-buttons-container .toggle-rename-button {
+        flex: 1;
+    }
+
+    .team-buttons-container .inline-form {
+        flex: 1;
+        margin-left: 0;
+        display: flex;
+    }
+
+    .team-buttons-container .inline-form .button-danger {
+        width: 100%;
     }
 
     .team-actions-form {
@@ -223,14 +238,6 @@ code,
     .rename-button {
         margin-right: 0;
         margin-bottom: 8px;
-    }
-
-    .button-danger {
-        width: 100%;
-    }
-
-    .toggle-rename-button {
-        width: 100%;
     }
 
     /* Menu buttons on mobile */
@@ -263,6 +270,8 @@ code,
 
 .button-danger {
     background: #dc3545 !important;
+    max-width: 170px;
+    float: right;
 }
 
 .button-danger:hover {
@@ -293,17 +302,58 @@ code,
     border-radius: 4px;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Team info container - displays ID and team name */
+.team-info-container {
+    display: block;
+    width: 100%;
+}
+
+/* Team info section with fixed columns */
+.team-info {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 10px;
     align-items: center;
 }
 
+/* Team buttons container - displays toggle and delete buttons */
+.team-buttons-container {
+    display: block;
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.team-id-column {
+    width: 50px;
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+}
+
+.team-name-column {
+    word-break: break-word;
+}
+
 .team-actions-form {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    margin: 0;
+}
+
+.inline-form {
     display: inline;
     margin: 0;
 }
 
 .team-name-input {
-    width: 150px;
+    /*min-width: 80px;*/
     margin-right: 5px;
 }
 
@@ -322,9 +372,26 @@ code,
 }
 
 .toggle-rename-button {
-    padding: 5px 10px;
-    font-size: 12px;
-    min-height: auto;
+    padding: 8px 12px;
+    font-size: 14px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure toggle and delete buttons match height and have small gap */
+.team-buttons-container .toggle-rename-button,
+.team-buttons-container .inline-form .button-danger {
+    min-height: 40px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-actions .inline-form {
+    margin-left: 6px; /* small space between toggle and delete */
 }
 
 /* Alert and Warning Styles */
@@ -335,3 +402,127 @@ code,
     border-radius: 4px;
     margin-bottom: 20px;
 }
+
+/* Category Button Group */
+.categories-button-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.category-button {
+    padding: 15px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.category-button:hover {
+    background: #0056b3;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+/* Score Input Group */
+.score-input-group {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.score-input-row {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 10px;
+    align-items: center;
+}
+
+.score-input-row label {
+    font-weight: bold;
+    color: #333;
+}
+
+.score-input-row input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.score-input-row input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Modal Buttons */
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.button-save {
+    background: #28a745;
+}
+
+.button-save:hover {
+    background: #218838;
+}
+
+.button-cancel {
+    background: #6c757d;
+}
+
+.button-cancel:hover {
+    background: #5a6268;
+}
+
