@@ -5,19 +5,24 @@
             "name": "Team 1",
             "scores": {
                 "1": {
-                    "score": 23,
+                    "score": 89,
                     "joker": true,
                     "bonusquestion": false
                 },
                 "2": {
                     "score": 12,
-                    "joker": false,
+                    "joker": true,
                     "bonusquestion": false
                 },
                 "3": {
                     "score": 34,
                     "joker": false,
                     "bonusquestion": true
+                },
+                "4": {
+                    "score": 5,
+                    "joker": true,
+                    "bonusquestion": false
                 }
             }
         },
@@ -32,11 +37,16 @@
                 },
                 "2": {
                     "score": 32,
-                    "joker": true,
-                    "bonusquestion": true
+                    "joker": false,
+                    "bonusquestion": false
                 },
                 "3": {
                     "score": 32,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "4": {
+                    "score": 0,
                     "joker": false,
                     "bonusquestion": false
                 }
@@ -60,9 +70,14 @@
                     "score": 1,
                     "joker": true,
                     "bonusquestion": false
+                },
+                "4": {
+                    "score": 0,
+                    "joker": false,
+                    "bonusquestion": false
                 }
             }
         }
     ],
-    "numCategories": 3
+    "numCategories": 4
 }
