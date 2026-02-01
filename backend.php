@@ -59,45 +59,6 @@ $htmlHead = '
         
         // Team data for score loading (will be populated by PHP)
         const teamsData = ' . json_encode($game['Teams'] ?? []) . ';
-        
-        function editCategoryScores(categoryId, categoryName) {
-            const dialog = document.getElementById("score-modal");
-            dialog.style.display = "block";
-            document.getElementById("modal-category-id").value = categoryId;
-            document.getElementById("modal-category-title").textContent = "Category " + categoryId;
-            
-            // Load existing scores and joker status for this category
-            teamsData.forEach(team => {
-                const teamId = team.id;
-                const scoreInput = document.querySelector("input[name=\"team_" + teamId + "_score\"]");
-                const jokerCheckbox = document.getElementById("joker_" + teamId);
-                
-                if (scoreInput && jokerCheckbox) {
-                    let score = 0;
-                    let joker = false;
-                    
-                    if (team.scores && team.scores[categoryId]) {
-                        score = team.scores[categoryId].score || 0;
-                        joker = team.scores[categoryId].joker || false;
-                    }
-                    
-                    scoreInput.value = score;
-                    jokerCheckbox.checked = joker;
-                }
-            });
-        }
-        
-        function closeScoreModal() {
-            const dialog = document.getElementById("score-modal");
-            dialog.style.display = "none";
-        }
-        
-        window.onclick = function(event) {
-            const dialog = document.getElementById("score-modal");
-            if (event.target == dialog) {
-                dialog.style.display = "none";
-            }
-        }
     </script>';
 $htmlTitle = 'Pub Quiz Score Manager';
 
@@ -442,10 +403,12 @@ if ($showManageScore && isset($_POST['save_category_scores'])) {
             $teamId = $team['id'] ?? 0;
             $scoreKey = 'team_' . $teamId . '_score';
             $jokerKey = 'team_' . $teamId . '_joker';
+            $bonusQuestionKey = 'team_' . $teamId . '_bonusquestion';
             
             if (isset($_POST[$scoreKey])) {
                 $score = intval($_POST[$scoreKey]);
                 $joker = isset($_POST[$jokerKey]) ? true : false;
+                $bonusQuestion = isset($_POST[$bonusQuestionKey]) ? true : false;
                 
                 // Initialize scores object if not exists
                 if (!isset($team['scores'])) {
@@ -455,7 +418,8 @@ if ($showManageScore && isset($_POST['save_category_scores'])) {
                 // Store score with joker flag
                 $team['scores'][$categoryId] = [
                     'score' => $score,
-                    'joker' => $joker
+                    'joker' => $joker,
+                    'bonusquestion' => $bonusQuestion
                 ];
             }
         }
@@ -527,7 +491,7 @@ if ($showCreateNewGame) {
     echo '</div>';
     echo '</body>';
     echo '</html>';
-    exit;
+    exit();
 }
 
 // Manage Teams Section
@@ -542,6 +506,7 @@ if ($showManageTeams) {
     
     echo '<form method="post" class="form-back-button">';
     echo '<input type="hidden" name="manage_teams" value="1">';
+
     echo '<button type="submit" name="back_to_menu" value="1">← Back to Menu</button>';
     echo '</form>';
     
@@ -696,14 +661,16 @@ if ($showManageScore && $editingCategoryId) {
         $teamName = htmlspecialchars($team['name'] ?? 'Team ' . $teamId, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $currentScore = 0;
         $currentJoker = false;
+        $currentBonusQuestion = false;
         
         // Get current score if exists
         if (isset($team['scores'][$editingCategoryId])) {
             $currentScore = intval($team['scores'][$editingCategoryId]['score'] ?? 0);
             $currentJoker = $team['scores'][$editingCategoryId]['joker'] ?? false;
+            $currentBonusQuestion = $team['scores'][$editingCategoryId]['bonusquestion'] ?? false;
         }
         
-        echo '<div class="score-input-row">';
+        echo '<div class="team-card">';
         echo '<div class="team-info">';
         echo '<div class="team-id-column"><strong>' . $teamId . '</strong></div>';
         echo '<div class="team-name-column">' . $teamName . '</div>';
@@ -712,6 +679,10 @@ if ($showManageScore && $editingCategoryId) {
         echo '<div class="joker-checkbox">';
         echo '<input type="checkbox" id="joker_' . $teamId . '" name="team_' . $teamId . '_joker"' . ($currentJoker ? ' checked' : '') . '>';
         echo '<label for="joker_' . $teamId . '">Joker</label>';
+        echo '</div>';
+        echo '<div class="bonusquestion-checkbox">';
+        echo '<input type="checkbox" id="bonusquestion_' . $teamId . '" name="team_' . $teamId . '_bonusquestion"' . ($currentBonusQuestion ? ' checked' : '') . '>';
+        echo '<label for="bonusquestion_' . $teamId . '">Bonus Question</label>';
         echo '</div>';
         echo '</div>';
     }
@@ -747,8 +718,6 @@ echo '</div>';
 echo '</form>';
 echo '</div>';
 echo '</body>';
-echo '</html>
-
-';
+echo '</html>';
 
 ?>
