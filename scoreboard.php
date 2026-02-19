@@ -8,26 +8,19 @@ $gameFile = __DIR__ . '/game.json';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Scoreboard</title>
-  <style>
-    body{font-family:sans-serif;margin:16px;color:#111}
-    table{border-collapse:collapse;width:100%;max-width:980px}
-    th,td{border:1px solid #ccc;padding:8px;text-align:left}
-    th{background:#f2f2f2}
-    .num{text-align:right}
-    .muted{color:#666;font-size:0.9em}
-  </style>
+  <link rel="stylesheet" href="frontend.css">
 </head>
 <body>
   <h1>Scoreboard</h1>
+  <p>TEST 123</p>
   <div id="last-updated" class="muted">Loading...</div>
   <table>
     <thead id="score-thead">
       <tr>
-        <th>Rank</th>
-        <th>Team ID</th>
-        <th>Team Name</th>
+        <th></th>
+        <th></th>
         <!-- category headers inserted by JS -->
-        <th>Total</th>
+        <th></th>
       </tr>
     </thead>
     <tbody id="score-tbody">
@@ -67,17 +60,17 @@ $gameFile = __DIR__ . '/game.json';
       // rebuild header
       const thead = document.getElementById('score-thead');
       const tr = document.createElement('tr');
-      tr.innerHTML = '<th>Rank</th><th>Team ID</th><th>Team Name</th>';
+      tr.innerHTML = '<th></th><th></th>';
       for(let i=1;i<=numCategories;i++){
-        const th = document.createElement('th'); th.textContent = 'Category ' + i; tr.appendChild(th);
+        const th = document.createElement('th'); th.textContent = '' + i; tr.appendChild(th);
       }
-      const thTotal = document.createElement('th'); thTotal.textContent = 'Total'; tr.appendChild(thTotal);
+      const thTotal = document.createElement('th'); thTotal.textContent = ''; tr.appendChild(thTotal);
       thead.innerHTML = '';
       thead.appendChild(tr);
 
       const tbody = document.getElementById('score-tbody');
       if (!teams.length){
-        tbody.innerHTML = '<tr><td colspan="'+(4+numCategories)+'">No teams configured</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="'+(3+numCategories)+'">No teams configured</td></tr>';
       } else {
         // build array of team rows with totals
         const teamRows = teams.map(team=>{
@@ -111,7 +104,7 @@ $gameFile = __DIR__ . '/game.json';
         for(let idx=0; idx<teamRows.length; idx++){
           const r = teamRows[idx];
           const rank = idx + 1;
-          rows.push('<tr><td>' + rank + '</td><td>' + r.teamId + '</td><td>' + r.teamName + '</td>' + r.cells.join('') + '<td class="num">' + r.total + '</td></tr>');
+          rows.push('<tr><td>' + rank + '</td><td>' + r.teamName + '</td>' + r.cells.join('') + '<td class="num">' + r.total + '</td></tr>');
         }
         tbody.innerHTML = rows.join('\n');
       }

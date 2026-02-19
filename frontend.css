@@ -1,0 +1,36 @@
+@font-face {
+  font-family: "Fredoka One";
+  src: url("fredokaone-regular.ttf") format("truetype");
+}
+
+body {
+  font-family: "Fredoka One", sans-serif;
+  margin: 16px;
+  color: #ffc000;
+  background-color: black;
+  font-size: 28pt;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 980px;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+}
+
+.num {
+  text-align: right;
+}
+
+.muted {
+  color: #ffc000;
+  font-size: 0.9em;
+}

@@ -2,82 +2,20 @@
     "Teams": [
         {
             "id": 1,
-            "name": "Team 1",
-            "scores": {
-                "1": {
-                    "score": 89,
-                    "joker": true,
-                    "bonusquestion": false
-                },
-                "2": {
-                    "score": 12,
-                    "joker": true,
-                    "bonusquestion": false
-                },
-                "3": {
-                    "score": 34,
-                    "joker": false,
-                    "bonusquestion": true
-                },
-                "4": {
-                    "score": 5,
-                    "joker": true,
-                    "bonusquestion": false
-                }
-            }
+            "name": "Albert Teams 1"
         },
         {
             "id": 2,
-            "name": "Team 2",
-            "scores": {
-                "1": {
-                    "score": 2,
-                    "joker": true,
-                    "bonusquestion": false
-                },
-                "2": {
-                    "score": 32,
-                    "joker": false,
-                    "bonusquestion": false
-                },
-                "3": {
-                    "score": 32,
-                    "joker": false,
-                    "bonusquestion": false
-                },
-                "4": {
-                    "score": 0,
-                    "joker": false,
-                    "bonusquestion": false
-                }
-            }
+            "name": "Botox Group"
         },
         {
-            "id": 3,
-            "name": "Team 3",
-            "scores": {
-                "1": {
-                    "score": 43,
-                    "joker": false,
-                    "bonusquestion": true
-                },
-                "2": {
-                    "score": 53,
-                    "joker": true,
-                    "bonusquestion": false
-                },
-                "3": {
-                    "score": 1,
-                    "joker": true,
-                    "bonusquestion": false
-                },
-                "4": {
-                    "score": 0,
-                    "joker": false,
-                    "bonusquestion": false
-                }
-            }
+            "id": 4,
+            "name": "Citan 63t7263t"
+        },
+        {
+            "id": 5,
+            "name": "wef34f4"
         }
     ],
-    "numCategories": 4
+    "numCategories": 9
 }
