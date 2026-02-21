@@ -1,3 +1,4 @@
 backup/*.*
 clients.json
 game.json
+secret.php
