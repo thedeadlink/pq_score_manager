@@ -110,10 +110,12 @@ $gameFile = __DIR__ . '/game.json';
             let entry = (team.scores && team.scores[i]) !== undefined ? team.scores[i] : (team.scores && team.scores[String(i)] ? team.scores[String(i)] : null);
             let score = 0, mult = 1;
             let hasJoker = false;
+            let hasBonus = false;
             if (entry){
               if (typeof entry === 'object'){
                 score = parseInt(entry.score || 0);
                 if (entry.joker) { mult = 2; hasJoker = true; }
+                if (entry.bonus) { hasBonus = true; }
               } else {
                 score = parseInt(entry || 0);
               }
@@ -121,7 +123,7 @@ $gameFile = __DIR__ . '/game.json';
             const effective = (isNaN(score) ? 0 : score) * mult;
             total += effective;
             cells.push('<td><div class="score_cat" style="text-align: right;">' + effective + '</div></td>');
-            cells.push('<td><div class="joker_cat" style="text-align: left;">' + (hasJoker ? 'J' : '') + '</div></td>');
+            cells.push('<td><div class="joker_cat" style="text-align: left;">' + (hasJoker ? 'J' : '') + (hasBonus ? 'B' : '') + '</div></td>');
           }
           return { teamId, teamName, total, cells };
         });
