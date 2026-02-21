@@ -115,7 +115,7 @@ $gameFile = __DIR__ . '/game.json';
               if (typeof entry === 'object'){
                 score = parseInt(entry.score || 0);
                 if (entry.joker) { mult = 2; hasJoker = true; }
-                if (entry.bonus) { hasBonus = true; }
+                if (entry.bonusquestion) { hasBonus = true; }
               } else {
                 score = parseInt(entry || 0);
               }
