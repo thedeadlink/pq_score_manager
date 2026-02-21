@@ -1,5 +1,11 @@
 <?php
 require_once __DIR__ . '/secret.php';
+
+// No-cache headers
+header('Cache-Control: no-cache, no-store, must-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
+
 $gameFile = __DIR__ . '/game.json';
 // Serve a static page that will fetch game.json periodically via JS
 ?>
