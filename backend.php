@@ -453,7 +453,7 @@ if ($showCreateNewGame && isset($_POST['confirm_create_new_game'])) {
         // Backup existing game file
         if (file_exists($gameFile)) {
             $timestamp = date('Y-m-d_Hi');
-            $backupFile = __DIR__ . '/game.json.' . $timestamp . '.backup';
+            $backupFile = __DIR__ . '/backup/game.json.' . $timestamp . '.backup';
             rename($gameFile, $backupFile);
         }
         
