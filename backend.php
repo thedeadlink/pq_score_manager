@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/secret.php';
+
 /**************************************************************************************************************************************
  * 
  * Configuration & Variables
@@ -6,9 +8,7 @@
  **************************************************************************************************************************************/
 
 // Token and Authentication
-$secretToken = 'GbJuRBpqamPcZRZU3pVfGxb7sonVzxCBfksgnjkkRHfbZneW7FKDFqK2Xw2FyHq2cLJavcYuiiqRGfrYyCJoQr34yH4jag6ecKP9';
 $providedToken = $_GET['token'] ?? $_POST['token'] ?? null;
-$authPassword = 'QWer1234';
 $authCookieName = 'pq_auth';
 
 // File Paths

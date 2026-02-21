@@ -2,19 +2,117 @@
     "Teams": [
         {
             "id": 1,
-            "name": "Albert Teams 1"
+            "name": "6 Helle",
+            "scores": {
+                "1": {
+                    "score": 2,
+                    "joker": false,
+                    "bonusquestion": true
+                },
+                "2": {
+                    "score": 6,
+                    "joker": true,
+                    "bonusquestion": false
+                },
+                "3": {
+                    "score": 2,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "10": {
+                    "score": 3,
+                    "joker": false,
+                    "bonusquestion": false
+                }
+            }
         },
         {
             "id": 2,
-            "name": "Botox Group"
+            "name": "Mädels 2.0",
+            "scores": {
+                "1": {
+                    "score": 5,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "2": {
+                    "score": 2,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "3": {
+                    "score": 4,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "10": {
+                    "score": 3,
+                    "joker": false,
+                    "bonusquestion": false
+                }
+            }
+        },
+        {
+            "id": 3,
+            "name": "Die EckQwizzer",
+            "scores": {
+                "1": {
+                    "score": 4,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "2": {
+                    "score": 6,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "3": {
+                    "score": 5,
+                    "joker": false,
+                    "bonusquestion": false
+                },
+                "10": {
+                    "score": 3,
+                    "joker": false,
+                    "bonusquestion": false
+                }
+            }
         },
         {
             "id": 4,
-            "name": "Citan 63t7263t"
+            "name": "Die Kalleseppels"
         },
         {
             "id": 5,
-            "name": "wef34f4"
+            "name": "Callies and Friends"
+        },
+        {
+            "id": 6,
+            "name": "SMARTINIS"
+        },
+        {
+            "id": 7,
+            "name": "Chalkaholics"
+        },
+        {
+            "id": 8,
+            "name": "Die Bierathleten und Jonas"
+        },
+        {
+            "id": 9,
+            "name": "Hopfen und Verstand"
+        },
+        {
+            "id": 10,
+            "name": "Die HeiNie´s"
+        },
+        {
+            "id": 11,
+            "name": "Golf"
+        },
+        {
+            "id": 12,
+            "name": "Die gloreichen Fünf"
         }
     ],
     "numCategories": 9

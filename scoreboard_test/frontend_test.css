@@ -12,12 +12,6 @@ body {
   font-weight: lighter;
 }
 
-#last-updated {
-  color: #66ffff;
-  font-size: 8pt;
-  font-weight: normal;
-}
-
 .joker_cat {
   color: #ffc000;
   font-size: 16pt;
@@ -25,16 +19,13 @@ body {
 
 .score_cat {
   color: #ff99ff;
-  font-size: 24pt;
+  font-size: 18pt;
 }
 
 .cat_header_title {
   color: #ffc000;
   font-size: 16pt;
   font-weight: normal;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .cat_header {
@@ -57,7 +48,7 @@ body {
 
 .team_name {
   color: #ffc000;
-  font-size: 22pt;
+  font-size: 18pt;
   font-weight: normal;
   white-space: nowrap;
   overflow: hidden;
