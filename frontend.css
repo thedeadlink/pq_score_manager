@@ -23,9 +23,15 @@ body {
   font-size: 16pt;
 }
 
+.joker_cat_used {
+  color: #ffbf0055;
+  text-decoration: line-through;
+  opacity: 1;
+}
+
 .score_cat {
   color: #ff99ff;
-  font-size: 24pt;
+  font-size: 28pt;
 }
 
 .cat_header_title {
@@ -62,4 +68,33 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.team_name_overview_large {
+  color: #ffc000;
+  font-size: 16pt;
+  font-weight: normal;
+  white-space: normal;
+  text-align: center;
+}
+
+.team_name_overview_normal {
+  color: #ffc000;
+  font-size: 14pt;
+  font-weight: normal;
+  white-space: normal;
+  text-align: center;
+}
+
+.team_name_overview_small {
+  color: #ffc000;
+  font-size: 12pt;
+  font-weight: normal;
+  white-space: normal;
+  text-align: center;
+}
+
+
+.team_cell {
+  text-align: center;
 }

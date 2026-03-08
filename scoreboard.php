@@ -8,6 +8,31 @@ header('Expires: 0');
 
 $gameFile = __DIR__ . '/game.json';
 // Serve a static page that will fetch game.json periodically via JS
+
+// Token and Authentication
+$providedToken = $_GET['token'] ?? $_POST['token'] ?? null;
+
+// Token Validation
+if ($providedToken !== $secretToken) {
+    http_response_code(403);
+    echo '
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nothing to see here</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+     <h1>Nothing to see here</h1>
+    </body>
+    </html>
+    ';
+    exit;
+}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -122,8 +147,10 @@ $gameFile = __DIR__ . '/game.json';
             }
             const effective = (isNaN(score) ? 0 : score) * mult;
             total += effective;
-            cells.push('<td><div class="score_cat" style="text-align: right;">' + effective + '</div></td>');
-            cells.push('<td><div class="joker_cat" style="text-align: left;">' + (hasJoker ? 'J' : '') + (hasBonus ? 'B' : '') + '</div></td>');
+            const displayScore = effective === 0 ? '-' : effective;
+            cells.push('<td><div class="score_cat" style="text-align: right;">' + displayScore + '</div></td>');
+            //cells.push('<td><div class="joker_cat" style="text-align: left;">' + (hasJoker && hasBonus ? 'x2<br>🏅' : '') + (hasBonus && !hasJoker ? '🏅' : '') + (hasJoker && !hasBonus ? 'x2' : '') + '</div></td>');
+            cells.push('<td><div class="joker_cat" style="text-align: left;">' + (hasJoker ? 'x2' : '') + '</div></td>');
           }
           return { teamId, teamName, total, cells };
         });
