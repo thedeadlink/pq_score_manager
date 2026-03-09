@@ -1,0 +1,45 @@
+@font-face {
+  font-family: "Fredoka One";
+  src: url("fredokaone-regular.ttf") format("truetype");
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Fredoka One", sans-serif;
+}
+
+#last-updated {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  font-size: 8pt;
+  line-height: 1;
+  z-index: 10;
+}
+
+#first-place-names {
+  width: 100%;
+  padding: 2rem;
+}
+
+.first-place-headline {
+  color: #66ffff;
+  font-size: clamp(2rem, 5vw, 4rem);
+  margin: 0 0 0.6em 0;
+}
+
+.first-place-team {
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0.35em 0;
+}
